@@ -1,21 +1,21 @@
 package model;
 
-public class Book extends LibraryItem {
-    private String isbn;
-    private static final int BORROW_DURATION = 21; // 3 weeks
+public class Journal extends LibraryItem {
+    private String conferenceName;
+    private static final int BORROW_DURATION = 14; // 2 weeks
 
-    public Book(String id, String title, String author, int year, String isbn) {
+    public Journal(String id, String title, String author, int year, String conferenceName) {
         super(id, title, author, year);
-        this.isbn = isbn;
+        this.conferenceName = conferenceName;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getConferenceName() {
+        return conferenceName;
     }
 
     @Override
     public String getType() {
-        return "Book";
+        return "Journal";
     }
 
     @Override
