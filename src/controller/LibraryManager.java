@@ -3,12 +3,18 @@ package controller;
 import model.LibraryDatabase;
 import model.LibraryItem;
 import model.UserAccount;
+import java.util.ArrayList;
+import java.util.List;
 
-ublic class LibraryManager {
+public class LibraryManager {
     private LibraryDatabase database;
+    private List<UserAccount> users; // In-memory user storage
 
     public LibraryManager() {
         this.database = new LibraryDatabase();
+        this.users = new ArrayList<>();
+        // Add a sample user for testing
+        users.add(new UserAccount("testuser"));
     }
 
     public void addItem(LibraryItem item) {
@@ -21,6 +27,7 @@ ublic class LibraryManager {
             database.removeItem(item);
         }
     }
+
     // --- Core Business Logic (Borrow/Return Role) ---
 
     public boolean processBorrow(String userId, String itemId) {
@@ -28,10 +35,8 @@ ublic class LibraryManager {
         LibraryItem item = database.findItemById(itemId);
 
         if (user != null && item != null && item.isAvailable()) {
-            // Using your LibraryItem's internal 'isAvailable' field
-            // You should add a setAvailable(boolean) method to LibraryItem if not present
-            item.setAvailable(false); 
-            user.borrowItem(item); // Calling your UserAccount method from Image 7
+            item.setAvailable(false);
+            user.borrowItem(item);
             return true;
         }
         return false;
@@ -43,25 +48,37 @@ ublic class LibraryManager {
 
         if (user != null && item != null) {
             item.setAvailable(true);
-            user.returnItem(item); // Calling your UserAccount method from Image 7
+            user.returnItem(item);
         }
     }
 
     // --- View & Search Logic (Search Specialist Role) ---
 
     public List<LibraryItem> getSortedItems(String criteria) {
-        List<LibraryItem> allItems = database.getAllItems();
+        List<LibraryItem> allItems = new ArrayList<>(database.getAllItems()); // Create a mutable copy
         if (criteria.equalsIgnoreCase("Title")) {
-            searchSortTool.mergeSort(allItems, LibraryComparators.byTitle());
+            Sorting.mergeSort(allItems, Sorting.LibraryComparators.byTitle());
         } else if (criteria.equalsIgnoreCase("Year")) {
-            searchSortTool.mergeSort(allItems, LibraryComparators.byYear());
+            Sorting.mergeSort(allItems, Sorting.LibraryComparators.byYear());
+        } else if (criteria.equalsIgnoreCase("Author")) {
+            Sorting.mergeSort(allItems, Sorting.LibraryComparators.byAuthor());
         }
         return allItems;
     }
 
-    // Helper to find users (Since your Database only stores Items)
+    // Helper to find users
     private UserAccount findUserById(String id) {
-        // Implementation to find user from the 'users' list
-        return users.stream().filter(u -> u.getName().equals(id)).findFirst().orElse(null);
+        return users.stream()
+                .filter(u -> u.getName().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public LibraryDatabase getDatabase() {
+        return database;
+    }
+
+    public List<UserAccount> getUsers() {
+        return users;
     }
 }
