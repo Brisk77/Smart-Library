@@ -14,7 +14,7 @@ public class LibraryManager {
         this.database = new LibraryDatabase();
         this.users = new ArrayList<>();
         // Add a sample user for testing
-        users.add(new UserAccount("testuser"));
+        users.add(new UserAccount("testuser", "Test User"));
     }
 
     public void addItem(LibraryItem item) {
@@ -68,8 +68,9 @@ public class LibraryManager {
 
     // Helper to find users
     private UserAccount findUserById(String id) {
+        // Correctly filter by the user ID field
         return users.stream()
-                .filter(u -> u.getName().equals(id))
+                .filter(u -> u.getUserId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
