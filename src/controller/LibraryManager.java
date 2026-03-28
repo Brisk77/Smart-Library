@@ -1,20 +1,26 @@
 package controller;
 
-import model.*;
-import java.util.*;
+import model.LibraryDatabase;
+import model.LibraryItem;
+import model.UserAccount;
 
-public class LibraryManager {
+ublic class LibraryManager {
     private LibraryDatabase database;
-    private List<UserAccount> users;
-    // We reuse your existing Search & Sorting Specialist logic here
-    private LibrarySearchAndSort searchSortTool;
 
-    public LibraryManager(LibraryDatabase database) {
-        this.database = database;
-        this.users = new ArrayList<>();
-        this.searchSortTool = new LibrarySearchAndSort();
+    public LibraryManager() {
+        this.database = new LibraryDatabase();
     }
 
+    public void addItem(LibraryItem item) {
+        database.addItem(item);
+    }
+
+    public void removeItem(String itemId) {
+        LibraryItem item = database.findItemById(itemId);
+        if (item != null) {
+            database.removeItem(item);
+        }
+    }
     // --- Core Business Logic (Borrow/Return Role) ---
 
     public boolean processBorrow(String userId, String itemId) {
