@@ -1,21 +1,25 @@
-public class StatusCellRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, 
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        
-        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        
-        // Assume column 4 is "Status" (Available/Borrowed)
-        String status = table.getValueAt(row, 4).toString();
-        
-        if (status.equalsIgnoreCase("Available")) {
-            c.setForeground(new Color(0, 128, 0)); // Green
-        } else if (status.equalsIgnoreCase("Borrowed")) {
-            c.setForeground(Color.RED);
-        } else if (status.equalsIgnoreCase("Overdue")) {
-            c.setBackground(new Color(255, 200, 200)); // Light Red Background
+public class BorrowController {
+    private Queue<UserAccount> reservationQueue;
+
+    public BorrowController() {
+        this.reservationQueue = new LinkedList<>();
+    public boolean borrowItem(LibraryItem item, UserAccount user) {
+        if (item.isAvailable()) {
+            item.setAvailable(false);
+            user.borrowItem(item);
+            return true;
+        } else {
+            reservationQueue.add(user);
+            System.out.println(user.getName() + " has been added to the waitlist for " + item.getTitle());
+            return false;
         }
-        
-        return c;
     }
-}
+
+    public void returnItem(LibraryItem item, UserAccount user) {
+        item.setAvailable(true);
+        user.returnItem(item);
+        if (!reservationQueue.isEmpty()) {
+            UserAccount nextUser = reservationQueue.poll();
+            System.out.println("Notifying " + nextUser.getName() + " that " + item.getTitle() + " is now available.");
+        }
+    }
