@@ -9,6 +9,22 @@ This is a simple Library Management System created as a group project for the MI
 *   Borrow and return books.
 *   View lists of available books and registered members.
 
+## Cloning from GitHub
+
+To get a copy of this project on your local machine, you can clone it from GitHub.
+
+1.  **Prerequisites**:
+    *   [Git](https://git-scm.com/downloads) installed on your system.
+
+2.  **Steps**:
+    *   Open a terminal or command prompt.
+    *   Navigate to the directory where you want to store the project.
+    *   Run the following command:
+        ```bash
+        git clone <repository-url>
+        ```
+    *   Replace `<repository-url>` with the actual URL of the GitHub repository.
+
 ## Installation and Setup
 
 This project can be set up and run on various IDEs that support Java development. Below are the instructions for some popular IDEs.
@@ -16,7 +32,7 @@ This project can be set up and run on various IDEs that support Java development
 ### Visual Studio Code
 
 1.  **Prerequisites**:
-    *   [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html) (version 11 or higher)
+    *   [Java Development Kit (JDK)](https.www.oracle.com/java/technologies/javase-downloads.html) (version 11 or higher)
     *   [Visual Studio Code](https://code.visualstudio.com/)
     *   [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) for Visual Studio Code
 
