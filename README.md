@@ -1,4 +1,4 @@
-# SLCA Library App
+# SLCAS Library App
 
 This is a simple Library Management System created as a group project for the MIVA Open University COS 202 course. The application is built using Java and provides basic functionalities for managing books and library members.
 
